@@ -50,7 +50,6 @@ catu3<-"https://apd.uw.edu.pl"
 ####################### MAIN LOOP
 apddb <- c("titpl", "titeng", "keypl", "keyeng", "lang", "promotor","data", "degree")
 for (i in 1:1000){
-  print(i)
   cat.page <- paste(catu1, toString(i),catu2, sep="")
   web <- html(cat.page)
   links<-web %>% html_nodes("a") %>% html_attr("href")
@@ -62,6 +61,7 @@ for (i in 1:1000){
     next
   }
   else{
+    cat(i, " ")
     for (k in fuw){
        pdurl<-paste(catu3, links[k], sep="")
        res<-infopageapd(pdurl)

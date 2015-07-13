@@ -35,10 +35,11 @@ infopageapd <-function(url){
     key.pl <- tit[5]
     key.eng <- tit[6]
     lang <-tinfo[2]
+    author <- tinfo[5]
     prom <- tinfo[7]
     data<- egzdat[4]
     
-  return(c(title.pl, title.eng, key.pl, key.eng, lang, prom, data, degr))
+  return(c(title.pl, title.eng, key.pl, key.eng, lang, author, prom, data, degr))
 }
 
 # from catalogue
@@ -48,8 +49,8 @@ catu2<-"&order=-delivered_date"
 catu3<-"https://apd.uw.edu.pl"
 
 ####################### MAIN LOOP
-apddb <- c("titpl", "titeng", "keypl", "keyeng", "lang", "promotor","data", "degree")
-for (i in 1:1000){
+apddb <- c("titpl", "titeng", "keypl", "keyeng", "lang", "author", "promotor","data", "degree")
+for (i in 1000:2000){
   cat.page <- paste(catu1, toString(i),catu2, sep="")
   web <- html(cat.page)
   links<-web %>% html_nodes("a") %>% html_attr("href")
@@ -70,5 +71,5 @@ for (i in 1:1000){
   }
 }
 
-write.table(apddb,"apddb.csv", sep=",", quote=FALSE, row.names=FALSE, col.names=FALSE)
+write.table(apddb,"apddb2.csv", sep=";", quote=FALSE, row.names=FALSE, col.names=FALSE)
 #######################

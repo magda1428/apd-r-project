@@ -50,7 +50,7 @@ catu3<-"https://apd.uw.edu.pl"
 
 ####################### MAIN LOOP
 apddb <- c("titpl", "titeng", "keypl", "keyeng", "lang", "author", "promotor","data", "degree")
-for (i in 1000:2000){
+for (i in 3001:4000){
   cat.page <- paste(catu1, toString(i),catu2, sep="")
   web <- html(cat.page)
   links<-web %>% html_nodes("a") %>% html_attr("href")

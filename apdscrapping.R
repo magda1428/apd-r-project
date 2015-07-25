@@ -23,23 +23,37 @@ infopageapd <-function(url){
   egzdat<-diploma %>%
     html_nodes("#thesisInfo div:nth-child(2)") %>%
     html_text()
-    
+  
     tit<-trim(tit)
     dat<-trim(dat)
     tinfo<-trim(tinfo)
     egzdat<-trim(unlist(strsplit(trim(egzdat), "\n   ")))
+    field<-trim(degr)
     degr<-trim(unlist(strsplit(trim(degr), " ")))[1]
-  
+    
+    
     title.pl <- tit[1]
     title.eng <- tit[2]
-    key.pl <- tit[5]
-    key.eng <- tit[6]
-    lang <-tinfo[2]
+    if (is.na(tit[5])){ # old diploma webpage formatting style
+      key.pl <- tit[4]
+      key.eng <- NA 
+      if (tit[1]==tit[2]){
+        lang <- "angielski [EN]"
+      }
+      else{
+        lang <- "polski [PL]"
+      }
+    }
+    else{ # new diploma webpage formatting style
+      key.pl <- tit[5]
+      key.eng <- tit[6]
+      lang <-tinfo[2]
+    }
     author <- tinfo[5]
     prom <- tinfo[7]
     data<- egzdat[4]
     
-  return(c(title.pl, title.eng, key.pl, key.eng, lang, author, prom, data, degr))
+  return(c(title.pl, title.eng, key.pl, key.eng, lang, author, prom, data, degr, field))
 }
 
 # from catalogue
@@ -49,8 +63,8 @@ catu2<-"&order=-delivered_date"
 catu3<-"https://apd.uw.edu.pl"
 
 ####################### MAIN LOOP
-apddb <- c("titpl", "titeng", "keypl", "keyeng", "lang", "author", "promotor","data", "degree")
-for (i in 3001:4000){
+apddb <- c("titpl", "titeng", "keypl", "keyeng", "lang", "author", "promotor","data", "degree", "field")
+for (i in 2001:3000){
   cat.page <- paste(catu1, toString(i),catu2, sep="")
   web <- html(cat.page)
   links<-web %>% html_nodes("a") %>% html_attr("href")
@@ -71,5 +85,5 @@ for (i in 3001:4000){
   }
 }
 
-write.table(apddb,"apddb2.csv", sep=";", quote=FALSE, row.names=FALSE, col.names=FALSE)
+write.table(apddb,"apddb_x3.csv", sep=";", quote=FALSE, row.names=FALSE, col.names=FALSE)
 #######################

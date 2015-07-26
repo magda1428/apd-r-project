@@ -48,5 +48,16 @@ cit<-cit[-which(is.na(cit$field)),]
 # name to gender
 
 # date string to date format
-as.Date("11 sty 2012 08:30:00","%d %b %y")
-substring
+cit$data<-gsub("stycznia", "sty", cit$data)
+cit$data<-gsub("lutego", "lut", cit$data)
+cit$data<-gsub("marca", "mar", cit$data)
+cit$data<-gsub("kwietnia", "kwi", cit$data)
+cit$data<-gsub("maja", "maj", cit$data)
+cit$data<-gsub("czerwca", "cze", cit$data)
+cit$data<-gsub("lipca", "lip", cit$data)
+cit$data<-gsub("września", "wrz", cit$data)
+cit$data<-gsub("października", "paź", cit$data)
+cit$data<-gsub("listopada", "lis", cit$data)
+cit$data<-gsub("grudnia", "gru", cit$data)
+
+cit$data<-as.Date(cit$data,"%d %b %Y")
